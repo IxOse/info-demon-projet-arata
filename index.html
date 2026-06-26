@@ -1,49 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Info Démon</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projet Info Démon</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="sigle">鬼</div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="seal">鬼</div>
       <div>
         <h1>Info Démon</h1>
-        <p>Laboratoire des Pourfendeurs</p>
+        <p>Base de données du Corps des Pourfendeurs</p>
       </div>
     </div>
-
     <nav>
       <a href="#accueil">Accueil</a>
-      <a href="#demons">Base des démons</a>
-      <a href="#fiche">Fiche active</a>
+      <a href="#demons">Démons</a>
+      <a href="#fiches">Fiches</a>
       <a href="#journal">Journal</a>
-      <a href="#admin">Administration</a>
+      <a href="#admin">Admin</a>
     </nav>
-
-    <div class="session">Panel libre</div>
-  </aside>
+  </header>
 
   <main>
     <section id="accueil" class="hero">
-      <span class="tag">DOSSIER SCIENTIFIQUE</span>
-      <h2>Projet Info Démon</h2>
-      <p>Base de données pour recenser les démons, leurs pouvoirs sanguinaires et leur niveau de menace.</p>
-
-      <div class="stats">
-        <div><b id="countDemons">0</b><span>Démons</span></div>
-        <div><b id="countLogs">0</b><span>Actions</span></div>
+      <div class="hero-content">
+        <span class="tag">PROJET OFFICIEL</span>
+        <h2>Projet Info Démon</h2>
+        <p>
+          Un centre d’archives pour recenser les démons, analyser leurs pouvoirs,
+          suivre leur évolution et aider les pourfendeurs lors des futures missions.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#demons">Voir la base</a>
+          <a class="btn ghost" href="#admin">Ajouter une fiche</a>
+        </div>
       </div>
     </section>
 
-    <section id="demons" class="page">
-      <h2>Base des démons</h2>
+    <section class="stats">
+      <article><strong id="statTotal">0</strong><span>Démons recensés</span></article>
+      <article><strong id="statDanger">0</strong><span>Menaces actives</span></article>
+      <article><strong id="statPouvoirs">0</strong><span>Pouvoirs connus</span></article>
+      <article><strong id="statJournal">0</strong><span>Rapports archivés</span></article>
+    </section>
+
+    <section class="section" id="demons">
+      <div class="section-title">
+        <span class="tag">BASE DE DONNÉES</span>
+        <h2>Liste des démons</h2>
+        <p>Recherche par nom, pouvoir, danger ou localisation.</p>
+      </div>
       <div class="tools">
-        <input id="search" placeholder="Rechercher un démon...">
-        <select id="filter">
+        <input id="search" type="text" placeholder="Rechercher un démon..."/>
+        <select id="filterDanger">
           <option value="">Tous les niveaux</option>
           <option>Faible</option>
           <option>Fort</option>
@@ -54,56 +66,71 @@
       <div id="demonGrid" class="grid"></div>
     </section>
 
-    <section id="fiche" class="page">
-      <h2>Fiche démon</h2>
-      <div id="ficheContent" class="card empty">Clique sur un démon pour voir sa fiche.</div>
+    <section class="section" id="fiches">
+      <div class="section-title">
+        <span class="tag">ARCHIVES</span>
+        <h2>Fiche complète</h2>
+        <p>Clique sur un démon pour afficher sa fiche détaillée.</p>
+      </div>
+      <div id="fiche" class="fiche empty">
+        <h3>Aucune fiche sélectionnée</h3>
+        <p>Sélectionne un démon dans la base de données.</p>
+      </div>
     </section>
 
-    <section id="journal" class="page">
-      <h2>Journal</h2>
-      <div id="logList" class="logs"></div>
+    <section class="section" id="classification">
+      <div class="section-title">
+        <span class="tag">DANGEROSITÉ</span>
+        <h2>Classification des menaces</h2>
+      </div>
+      <div class="levels">
+        <div><b>🟢 Faible</b><p>Démon peu dangereux, gérable par un pourfendeur préparé.</p></div>
+        <div><b>🟡 Fort</b><p>Démon capable de blesser sérieusement un bas-gradé.</p></div>
+        <div><b>🟠 Puissant</b><p>Démon nécessitant une équipe organisée et prudente.</p></div>
+        <div><b>🔴 Très puissant</b><p>Menace majeure. Intervention de gradés recommandée.</p></div>
+      </div>
     </section>
 
-    <section id="admin" class="page">
-      <h2>Panel Administrateur</h2>
-      <div class="card">
-        <h3>Ajouter / modifier un démon</h3>
+    <section class="section" id="journal">
+      <div class="section-title">
+        <span class="tag">OBSERVATIONS</span>
+        <h2>Journal scientifique</h2>
+      </div>
+      <div id="journalList" class="journal"></div>
+    </section>
 
-        <form id="demonForm">
-          <input type="hidden" name="editIndex" id="editIndex">
+    <section class="section" id="admin">
+      <div class="section-title">
+        <span class="tag">GESTION</span>
+        <h2>Panel administrateur</h2>
+        <p>Les fiches ajoutées ici sont sauvegardées sur ton navigateur.</p>
+      </div>
+      <div class="admin-card">
+        <div>
+          <h3>Ajouter une fiche démon</h3>
+          <p>Remplis les champs puis clique sur “Ajouter”.</p>
+        </div>
+        <form id="adminForm">
           <input name="nom" placeholder="Nom du démon" required>
           <input name="pouvoir" placeholder="Pouvoir sanguinaire" required>
-
-          <select name="niveau">
+          <select name="danger">
             <option>Faible</option>
             <option>Fort</option>
             <option>Puissant</option>
             <option>Très puissant</option>
           </select>
-
-          <input name="rang" placeholder="Rang / Statut">
-          <input name="gerant" placeholder="Gérant du pouvoir">
-          <input name="cogerant" placeholder="Co-gérant du pouvoir">
-          <input name="proche" placeholder="Démon le plus proche">
-          <input name="age" placeholder="Âge">
-          <input name="recherches" placeholder="Pourfendeurs recherchés">
-
-          <label class="file">
-            Image / croquis
-            <input id="imageInput" type="file" accept="image/*">
-          </label>
-
-          <img id="preview" class="preview hidden">
-
-          <textarea name="observations" placeholder="Observations, faiblesses, comportement..."></textarea>
-
-          <button>Enregistrer la fiche</button>
-          <button type="button" id="clearForm">Vider</button>
-          <button type="button" id="resetAll" class="danger">Réinitialiser</button>
+                    <input name="rang" placeholder="Rang / Statut">
+          <textarea name="notes" placeholder="Comportement, faiblesse, observations..."></textarea>
+          <button class="btn" type="submit">Ajouter la fiche</button>
+          <button class="btn ghost" type="button" id="resetData">Réinitialiser les données</button>
         </form>
       </div>
     </section>
   </main>
+
+  <footer>
+    <p>Projet Info Démon — Corps des Pourfendeurs</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>

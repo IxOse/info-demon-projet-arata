@@ -1,156 +1,131 @@
-let demons = JSON.parse(localStorage.getItem('demons_final_simple')||'null') || [
-  {nom:'Zirossi',pouvoir:'Résonance',niveau:'Puissant',rang:'Capturé',gerant:'Li 6',cogerant:'Inconnu',proche:'Aucun',age:'Non renseigné',recherches:'Aucun',observations:'Démon lié aux vibrations sonores.',image:''}
+const defaultDemons = [
+  {
+    nom:"Zirossi",
+    pouvoir:"Résonance",
+    danger:"Puissant",
+    rang:"Démon capturé",
+    notes:"Utilise des vibrations sonores. Aucun démon proche connu. Pouvoir lié à la résonance."
+  },
+  {
+    nom:"Flamme Spectrale",
+    pouvoir:"Flamme maudite",
+    danger:"Très puissant",
+    rang:"Menace active",
+    notes:"Attaques à moyenne distance. Faiblesse supposée : eau et attaque rapide."
+  },
+  {
+    nom:"Glace",
+    pouvoir:"Cryokinésie",
+    danger:"Fort",
+    rang:"Observation incomplète",
+    notes:"Ralentit ses adversaires avec le froid. Éviter le combat prolongé."
+  },
+  {
+    nom:"Sombre-Éclair",
+    pouvoir:"Foudre noire",
+    danger:"Très puissant",
+    rang:"Non capturé",
+    notes:"Déplacement extrêmement rapide. Intervention gradée recommandée."
+  }
 ];
 
-let logs = JSON.parse(localStorage.getItem('logs_final_simple')||'null') || [];
-let imageData = '';
+const defaultJournal = [
+  {date:"26/06", titre:"Création du registre", texte:"Mise en place de la base Info Démon."},
+  {date:"26/06", titre:"Fiche Zirossi", texte:"Première fiche complète ajoutée au registre."}
+];
+
+let demons = JSON.parse(localStorage.getItem("infoDemonData") || "null") || defaultDemons;
+let journal = JSON.parse(localStorage.getItem("infoDemonJournal") || "null") || defaultJournal;
+
+const grid = document.querySelector("#demonGrid");
+const fiche = document.querySelector("#fiche");
+const search = document.querySelector("#search");
+const filterDanger = document.querySelector("#filterDanger");
 
 function save(){
-  localStorage.setItem('demons_final_simple',JSON.stringify(demons));
-  localStorage.setItem('logs_final_simple',JSON.stringify(logs));
-}
-
-function addLog(txt){
-  logs.unshift({date:new Date().toLocaleString('fr-FR'),txt});
-  save();
-  renderLogs();
-  renderStats();
+  localStorage.setItem("infoDemonData", JSON.stringify(demons));
+  localStorage.setItem("infoDemonJournal", JSON.stringify(journal));
 }
 
 function renderStats(){
-  countDemons.textContent = demons.length;
-  countLogs.textContent = logs.length;
+  document.querySelector("#statTotal").textContent = demons.length;
+  document.querySelector("#statDanger").textContent = demons.filter(d => ["Fort","Puissant","Très puissant"].includes(d.danger)).length;
+  document.querySelector("#statPouvoirs").textContent = new Set(demons.map(d => d.pouvoir)).size;
+  document.querySelector("#statJournal").textContent = journal.length;
 }
 
 function renderDemons(){
-  const s = search.value.toLowerCase();
-  const f = filter.value;
-  demonGrid.innerHTML = '';
-
+  const q = search.value.toLowerCase();
+  const fd = filterDanger.value;
+  grid.innerHTML = "";
   demons
-    .filter(d => (!f || d.niveau === f) && Object.values(d).join(' ').toLowerCase().includes(s))
-    .forEach((d,i)=>{
-      const el = document.createElement('article');
-      el.innerHTML = `<span class="badge">${d.niveau}</span><h3>${d.nom}</h3><p>Pouvoir : ${d.pouvoir || 'Non renseigné'}<br>Gérant : ${d.gerant || 'Non renseigné'}<br>Rang : ${d.rang || 'Non renseigné'}</p>`;
-      el.onclick = () => showFiche(i);
-      demonGrid.appendChild(el);
+    .filter(d => !fd || d.danger === fd)
+    .filter(d => Object.values(d).join(" ").toLowerCase().includes(q))
+    .forEach((d, i) => {
+      const card = document.createElement("article");
+      card.innerHTML = `
+        <span class="badge">${d.danger}</span>
+        <h3>${d.nom}</h3>
+        <p class="meta">Pouvoir : ${d.pouvoir}<br>Zone : ${d.zone}<br>Statut : ${d.rang}</p>
+      `;
+      card.onclick = () => renderFiche(i);
+      grid.appendChild(card);
     });
 }
 
-function showFiche(i){
+function renderFiche(i){
   const d = demons[i];
-  ficheContent.classList.remove('empty');
-  ficheContent.innerHTML = `
-    ${d.image ? `<img class="demonimg" src="${d.image}">` : ''}
+  fiche.classList.remove("empty");
+  fiche.innerHTML = `
+    <span class="badge">${d.danger}</span>
     <h2>${d.nom}</h2>
-    <span class="badge">${d.niveau}</span>
-    <div class="fields">
-      <div class="field"><b>Pouvoir sanguinaire</b>${d.pouvoir || 'Non renseigné'}</div>
-      <div class="field"><b>Rang / Statut</b>${d.rang || 'Non renseigné'}</div>
-      <div class="field"><b>Gérant du pouvoir</b>${d.gerant || 'Non renseigné'}</div>
-      <div class="field"><b>Co-gérant du pouvoir</b>${d.cogerant || 'Non renseigné'}</div>
-      <div class="field"><b>Démon le plus proche</b>${d.proche || 'Non renseigné'}</div>
-      <div class="field"><b>Âge</b>${d.age || 'Non renseigné'}</div>
-      <div class="field full"><b>Pourfendeurs recherchés</b>${d.recherches || 'Non renseigné'}</div>
-      <div class="field full"><b>Observations</b>${d.observations || 'Aucune observation'}</div>
+    <div class="fiche-grid">
+      <div class="field"><b>Pouvoir sanguinaire</b>${d.pouvoir}</div>
+      <div class="field"><b>Dangerosité</b>${d.danger}</div>
+      <div class="field"><b>Rang / Statut</b>${d.rang || "Non renseigné"}</div>
+      <div class="field" style="grid-column:1/-1"><b>Observations</b>${d.notes || "Aucune observation."}</div>
     </div>
-    <br>
-    <button onclick="editDemon(${i})">Modifier</button>
-    <br><br>
-    <button class="danger" onclick="deleteDemon(${i})">Supprimer</button>`;
-  location.hash = 'fiche';
+  `;
+  location.hash = "fiches";
 }
 
-function editDemon(i){
-  const d = demons[i];
-  editIndex.value = i;
-  ['nom','pouvoir','niveau','rang','gerant','cogerant','proche','age','recherches','observations'].forEach(k=>{
-    demonForm.elements[k].value = d[k] || '';
+function renderJournal(){
+  const box = document.querySelector("#journalList");
+  box.innerHTML = "";
+  journal.forEach(j => {
+    const a = document.createElement("article");
+    a.innerHTML = `<b>${j.date} — ${j.titre}</b><p>${j.texte}</p>`;
+    box.appendChild(a);
   });
-  imageData = d.image || '';
-  if(imageData){
-    preview.src = imageData;
-    preview.classList.remove('hidden');
-  }
-  location.hash = 'admin';
 }
 
-function deleteDemon(i){
-  if(confirm('Supprimer cette fiche ?')){
-    const name = demons[i].nom;
-    demons.splice(i,1);
-    addLog('Suppression du démon : '+name);
-    renderAll();
-  }
-}
-
-imageInput.onchange = () => {
-  const file = imageInput.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    imageData = reader.result;
-    preview.src = imageData;
-    preview.classList.remove('hidden');
-  };
-  reader.readAsDataURL(file);
-};
-
-demonForm.onsubmit = e => {
+document.querySelector("#adminForm").addEventListener("submit", e => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
-  const i = data.editIndex;
-  delete data.editIndex;
-  data.image = imageData;
-
-  if(i === ''){
-    demons.push(data);
-    addLog('Ajout du démon : '+data.nom);
-  }else{
-    demons[Number(i)] = data;
-    addLog('Modification du démon : '+data.nom);
-  }
-
-  clear();
+  demons.push(data);
+  journal.unshift({date:new Date().toLocaleDateString("fr-FR"), titre:"Nouvelle fiche ajoutée", texte:`Fiche de ${data.nom} ajoutée au registre.`});
   save();
+  e.target.reset();
   renderAll();
-  location.hash = 'demons';
-};
+  alert("Fiche ajoutée !");
+});
 
-function clear(){
-  demonForm.reset();
-  editIndex.value = '';
-  imageData = '';
-  preview.src = '';
-  preview.classList.add('hidden');
-}
-
-clearForm.onclick = clear;
-
-resetAll.onclick = () => {
-  if(confirm('Réinitialiser toutes les fiches ?')){
-    localStorage.removeItem('demons_final_simple');
-    localStorage.removeItem('logs_final_simple');
-    location.reload();
+document.querySelector("#resetData").onclick = () => {
+  if(confirm("Réinitialiser toutes les données ?")){
+    localStorage.removeItem("infoDemonData");
+    localStorage.removeItem("infoDemonJournal");
+    demons = defaultDemons;
+    journal = defaultJournal;
+    renderAll();
   }
 };
-
-function renderLogs(){
-  logList.innerHTML = '';
-  logs.forEach(l=>{
-    const d = document.createElement('div');
-    d.innerHTML = `<b>${l.date}</b><br>${l.txt}`;
-    logList.appendChild(d);
-  });
-}
 
 search.oninput = renderDemons;
-filter.onchange = renderDemons;
+filterDanger.onchange = renderDemons;
 
 function renderAll(){
   renderStats();
   renderDemons();
-  renderLogs();
+  renderJournal();
 }
-
 renderAll();
