@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900"><rect width="1600" height="900" fill="#08050d"/><text x="570" y="180" fill="#fff" opacity=".1" font-size="80" font-family="Arial">悪鬼研究所</text><g stroke="#fff" opacity=".18" stroke-width="2"><rect x="100" y="150" width="380" height="470"/><rect x="560" y="230" width="520" height="320"/><rect x="1160" y="130" width="330" height="540"/><path d="M0 700h1600M300 0v900M850 0v900M1220 0v900"/></g><circle cx="1200" cy="200" r="360" fill="#ff315d" opacity=".12"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900">
+<rect width="1600" height="900" fill="#08050d"/>
+<text x="570" y="180" fill="#fff" opacity=".1" font-size="80" font-family="Arial">悪鬼研究所</text>
+<g stroke="#fff" opacity=".18" stroke-width="2">
+<rect x="100" y="150" width="380" height="470"/>
+<rect x="560" y="230" width="520" height="320"/>
+<rect x="1160" y="130" width="330" height="540"/>
+<path d="M0 700h1600M300 0v900M850 0v900M1220 0v900"/>
+</g>
+<circle cx="1200" cy="200" r="360" fill="#ff315d" opacity=".12"/>
+</svg>

@@ -12,18 +12,19 @@
       <div class="sigle">鬼</div>
       <div>
         <h1>Info Démon</h1>
-        <p>Corps des Pourfendeurs</p>
+        <p>Laboratoire des Pourfendeurs</p>
       </div>
     </div>
+
     <nav>
       <a href="#accueil">Accueil</a>
-      <a href="#demons">Démons</a>
-      <a href="#fiche">Fiche</a>
-      <a href="#scientifiques">Scientifiques</a>
+      <a href="#demons">Base des démons</a>
+      <a href="#fiche">Fiche active</a>
       <a href="#journal">Journal</a>
-      <a href="#admin">Admin</a>
+      <a href="#admin">Administration</a>
     </nav>
-    <div id="session" class="session">Non connecté</div>
+
+    <div class="session">Panel libre</div>
   </aside>
 
   <main>
@@ -31,15 +32,16 @@
       <span class="tag">DOSSIER SCIENTIFIQUE</span>
       <h2>Projet Info Démon</h2>
       <p>Base de données pour recenser les démons, leurs pouvoirs sanguinaires, leurs responsables et leur niveau de menace.</p>
+
       <div class="stats">
         <div><b id="countDemons">0</b><span>Démons</span></div>
-        <div><b id="countScientists">0</b><span>Scientifiques</span></div>
         <div><b id="countLogs">0</b><span>Actions</span></div>
       </div>
     </section>
 
     <section id="demons" class="page">
       <h2>Base des démons</h2>
+
       <div class="tools">
         <input id="search" placeholder="Rechercher un démon...">
         <select id="filter">
@@ -50,6 +52,7 @@
           <option>Très puissant</option>
         </select>
       </div>
+
       <div id="demonGrid" class="grid"></div>
     </section>
 
@@ -58,74 +61,49 @@
       <div id="ficheContent" class="card empty">Clique sur un démon pour voir sa fiche.</div>
     </section>
 
-    <section id="scientifiques" class="page">
-      <h2>Scientifiques</h2>
-      <div id="scientistList" class="grid"></div>
-    </section>
-
     <section id="journal" class="page">
       <h2>Journal</h2>
       <div id="logList" class="logs"></div>
     </section>
 
     <section id="admin" class="page">
-      <h2>Panel Admin</h2>
+      <h2>Panel Administrateur</h2>
 
-      <div id="loginBox" class="card">
-        <h3>Connexion avec SteamID64</h3>
-        <form id="loginForm">
-          <input name="steamid" placeholder="SteamID64" required>
-          <button>Se connecter</button>
+      <div class="card">
+        <h3>Ajouter / modifier un démon</h3>
+
+        <form id="demonForm">
+          <input type="hidden" name="editIndex" id="editIndex">
+          <input name="nom" placeholder="Nom du démon" required>
+          <input name="pouvoir" placeholder="Pouvoir sanguinaire" required>
+
+          <select name="niveau">
+            <option>Faible</option>
+            <option>Fort</option>
+            <option>Puissant</option>
+            <option>Très puissant</option>
+          </select>
+
+          <input name="rang" placeholder="Rang / Statut">
+          <input name="gerant" placeholder="Gérant du pouvoir">
+          <input name="cogerant" placeholder="Co-gérant du pouvoir">
+          <input name="proche" placeholder="Démon le plus proche">
+          <input name="age" placeholder="Âge">
+          <input name="recherches" placeholder="Pourfendeurs recherchés">
+
+          <label class="file">
+            Image / croquis
+            <input id="imageInput" type="file" accept="image/*">
+          </label>
+
+          <img id="preview" class="preview hidden">
+
+          <textarea name="observations" placeholder="Observations, faiblesses, comportement..."></textarea>
+
+          <button>Enregistrer la fiche</button>
+          <button type="button" id="clearForm">Vider</button>
+          <button type="button" id="resetAll" class="danger">Réinitialiser</button>
         </form>
-        <p class="hint">SteamID test dirigeant : 76561198000000001</p>
-      </div>
-
-      <div id="adminBox" class="hidden">
-        <div class="card">
-          <h3>Ajouter / modifier un démon</h3>
-          <form id="demonForm">
-            <input type="hidden" name="editIndex" id="editIndex">
-            <input name="nom" placeholder="Nom du démon" required>
-            <input name="pouvoir" placeholder="Pouvoir sanguinaire" required>
-            <select name="niveau">
-              <option>Faible</option>
-              <option>Fort</option>
-              <option>Puissant</option>
-              <option>Très puissant</option>
-            </select>
-            <input name="rang" placeholder="Rang / Statut">
-            <input name="gerant" placeholder="Gérant du pouvoir">
-            <input name="cogerant" placeholder="Co-gérant du pouvoir">
-            <input name="proche" placeholder="Démon le plus proche">
-            <input name="age" placeholder="Âge">
-            <input name="recherches" placeholder="Pourfendeurs recherchés">
-            <label class="file">Image / croquis <input id="imageInput" type="file" accept="image/*"></label>
-            <img id="preview" class="preview hidden">
-            <textarea name="observations" placeholder="Observations, faiblesses, comportement..."></textarea>
-            <button>Enregistrer la fiche</button>
-            <button type="button" id="clearForm">Vider</button>
-          </form>
-        </div>
-
-        <div class="card" id="scientistAdmin">
-          <h3>Ajouter un scientifique</h3>
-          <form id="scientistForm">
-            <input name="nom" placeholder="Nom RP" required>
-            <input name="steamid" placeholder="SteamID64" required>
-            <input name="discord" placeholder="Discord">
-            <select name="grade">
-              <option>Scientifique en test</option>
-              <option>Scientifique confirmé</option>
-              <option>Scientifique chef</option>
-              <option>Scientifique co-gérant</option>
-              <option>Scientifique gérant</option>
-              <option>Scientifique dirigeant</option>
-            </select>
-            <button>Ajouter / modifier</button>
-          </form>
-        </div>
-
-        <button id="logout">Déconnexion</button>
       </div>
     </section>
   </main>

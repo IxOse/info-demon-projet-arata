@@ -1,15 +1,19 @@
-INSTALLATION SIMPLE
+VERSION SIMPLE SANS PERMISSIONS
 
-1. Supprime tout dans ton dépôt sauf README.md si tu veux.
-2. Extrais ce ZIP.
-3. Envoie directement à la racine :
-   - index.html
-   - style.css
-   - script.js
-   - assets
-4. N'envoie PAS le fichier ZIP sur GitHub.
-5. Settings > Pages > main > /(root).
+Retiré :
+- grades scientifiques
+- SteamID
+- permissions
+- connexion
 
-SteamID de test :
-76561198000000001 = Scientifique dirigeant
-76561198000000002 = Scientifique chef
+Fonctions :
+- ajouter un démon
+- modifier un démon
+- supprimer un démon
+- ajouter une image
+- journal automatique
+- sauvegarde locale navigateur
+
+Sur GitHub :
+Envoie uniquement index.html, style.css, script.js et assets.
+N'envoie pas le ZIP.
