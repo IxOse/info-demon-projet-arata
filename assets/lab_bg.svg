@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#12091d"/><stop offset="1" stop-color="#05030a"/></linearGradient></defs>
+<rect width="1600" height="900" fill="url(#g)"/>
+<g opacity=".22" stroke="#ffffff" stroke-width="2">
+<path d="M0 700h1600M0 520h1600M250 0v900M520 0v900M850 0v900M1200 0v900"/>
+<rect x="90" y="120" width="360" height="430" rx="10"/><rect x="520" y="210" width="560" height="340" rx="10"/><rect x="1160" y="120" width="330" height="520" rx="10"/>
+</g>
+<g opacity=".35" fill="#ff315d">
+<circle cx="220" cy="650" r="8"/><circle cx="760" cy="620" r="7"/><circle cx="1310" cy="690" r="9"/>
+</g>
+<text x="720" y="170" fill="#ffffff" font-size="70" opacity=".1" font-family="Arial">悪鬼研究所</text>
+</svg>

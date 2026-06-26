@@ -2,79 +2,140 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projet Info Démon</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="noise"></div>
   <header class="topbar">
-    <div class="brand"><span class="seal">鬼</span><div><b>Info Démon</b><small>Corps des Pourfendeurs</small></div></div>
+    <div class="brand">
+      <div class="seal">鬼</div>
+      <div>
+        <h1>Info Démon</h1>
+        <p>Base de données du Corps des Pourfendeurs</p>
+      </div>
+    </div>
     <nav>
-      <a href="#accueil">Accueil</a><a href="#database">Démons</a><a href="#fiches">Fiches</a><a href="#journal">Journal</a><a href="#admin">Admin</a>
+      <a href="#accueil">Accueil</a>
+      <a href="#demons">Démons</a>
+      <a href="#fiches">Fiches</a>
+      <a href="#journal">Journal</a>
+      <a href="#admin">Admin</a>
     </nav>
   </header>
 
-  <section id="accueil" class="hero">
-    <div class="hero-content reveal">
-      <p class="eyebrow">Base de données officielle</p>
-      <h1>Projet <span>Info Démon</span></h1>
-      <p class="lead">Un centre d'archives pour recenser, analyser et suivre l'évolution des démons capturés ou observés pendant les missions RP.</p>
-      <div class="hero-actions"><a class="btn primary" href="#database">Ouvrir la base</a><a class="btn" href="#fiches">Voir une fiche</a></div>
-    </div>
-    <div class="terminal reveal">
-      <div class="terminal-head"><span></span><span></span><span></span></div>
-      <p>> Initialisation du registre...</p><p>> Démons recensés : <b id="countDemons">7</b></p><p>> Niveau d'alerte : <b class="danger">Élevé</b></p><p>> Dernière mise à jour : aujourd'hui</p>
-    </div>
-  </section>
-
   <main>
-    <section class="section reveal" id="objectif">
-      <div class="section-title"><p>Mission</p><h2>À quoi ça sert ?</h2></div>
-      <div class="grid three">
-        <article class="card"><i>🔎</i><h3>Identifier</h3><p>Retrouver rapidement le nom, le pouvoir, le rang et les informations connues d'un démon.</p></article>
-        <article class="card"><i>📈</i><h3>Suivre</h3><p>Comparer l'état d'un démon entre deux captures pour repérer une évolution physique ou comportementale.</p></article>
-        <article class="card"><i>⚔️</i><h3>Préparer</h3><p>Aider les pourfendeurs à choisir une stratégie, une équipe et une respiration adaptée.</p></article>
+    <section id="accueil" class="hero">
+      <div class="hero-content">
+        <span class="tag">PROJET OFFICIEL</span>
+        <h2>Projet Info Démon</h2>
+        <p>
+          Un centre d’archives pour recenser les démons, analyser leurs pouvoirs,
+          suivre leur évolution et aider les pourfendeurs lors des futures missions.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#demons">Voir la base</a>
+          <a class="btn ghost" href="#admin">Ajouter une fiche</a>
+        </div>
       </div>
     </section>
 
-    <section class="section reveal" id="stats">
-      <div class="stats">
-        <div><strong>48</strong><span>Démons recensés</span></div><div><strong>27</strong><span>Pouvoirs identifiés</span></div><div><strong>184</strong><span>Rapports archivés</span></div><div><strong>11</strong><span>Menaces actives</span></div>
+    <section class="stats">
+      <article><strong id="statTotal">0</strong><span>Démons recensés</span></article>
+      <article><strong id="statDanger">0</strong><span>Menaces actives</span></article>
+      <article><strong id="statPouvoirs">0</strong><span>Pouvoirs connus</span></article>
+      <article><strong id="statJournal">0</strong><span>Rapports archivés</span></article>
+    </section>
+
+    <section class="section" id="demons">
+      <div class="section-title">
+        <span class="tag">BASE DE DONNÉES</span>
+        <h2>Liste des démons</h2>
+        <p>Recherche par nom, pouvoir, danger ou localisation.</p>
+      </div>
+      <div class="tools">
+        <input id="search" type="text" placeholder="Rechercher un démon..."/>
+        <select id="filterDanger">
+          <option value="">Tous les niveaux</option>
+          <option>Faible</option>
+          <option>Moyen</option>
+          <option>Dangereux</option>
+          <option>Très dangereux</option>
+          <option>Priorité absolue</option>
+        </select>
+      </div>
+      <div id="demonGrid" class="grid"></div>
+    </section>
+
+    <section class="section" id="fiches">
+      <div class="section-title">
+        <span class="tag">ARCHIVES</span>
+        <h2>Fiche complète</h2>
+        <p>Clique sur un démon pour afficher sa fiche détaillée.</p>
+      </div>
+      <div id="fiche" class="fiche empty">
+        <h3>Aucune fiche sélectionnée</h3>
+        <p>Sélectionne un démon dans la base de données.</p>
       </div>
     </section>
 
-    <section class="section reveal" id="database">
-      <div class="section-title"><p>Archives</p><h2>Liste des démons</h2></div>
-      <div class="tools"><input id="search" type="search" placeholder="Rechercher un démon, pouvoir ou danger..." /><select id="filter"><option value="all">Tous les niveaux</option><option>Faible</option><option>Moyen</option><option>Dangereux</option><option>Très dangereux</option><option>Priorité absolue</option></select></div>
-      <div class="demon-grid" id="demonGrid"></div>
-    </section>
-
-    <section class="section reveal" id="fiches">
-      <div class="section-title"><p>Exemple</p><h2>Fiche Démon — Zirossi</h2></div>
-      <div class="profile">
-        <div class="profile-left"><h3>Zirossi</h3><p class="badge danger-bg">Très dangereux</p><ul><li><b>Pouvoir :</b> Résonance</li><li><b>Gérant :</b> Li 6</li><li><b>Zone :</b> Forêt Sélection</li><li><b>Âge :</b> Non renseigné</li><li><b>État :</b> Sous surveillance</li></ul></div>
-        <div class="profile-right"><h4>Analyse scientifique</h4><p>Le démon semble utiliser des vibrations sonores pour perturber l'équilibre et la concentration des pourfendeurs. Les prochaines observations devront confirmer sa portée exacte.</p><div class="meter"><span style="width:86%"></span></div><small>Dangerosité estimée : 86%</small></div>
+    <section class="section" id="classification">
+      <div class="section-title">
+        <span class="tag">DANGEROSITÉ</span>
+        <h2>Classification des menaces</h2>
+      </div>
+      <div class="levels">
+        <div><b>🟢 Faible</b><p>Démon peu expérimenté.</p></div>
+        <div><b>🟡 Moyen</b><p>Peut blesser un bas-gradé.</p></div>
+        <div><b>🟠 Dangereux</b><p>Nécessite une équipe organisée.</p></div>
+        <div><b>🔴 Très dangereux</b><p>Menace pour plusieurs pourfendeurs.</p></div>
+        <div><b>⚫ Priorité absolue</b><p>Intervention gradée recommandée.</p></div>
       </div>
     </section>
 
-    <section class="section reveal" id="classification">
-      <div class="section-title"><p>Protocole</p><h2>Classification des menaces</h2></div>
-      <div class="timeline"><div><b>🟢 Faible</b><span>Démon isolé, peu agressif.</span></div><div><b>🟡 Moyen</b><span>Pouvoir connu, risque contrôlable.</span></div><div><b>🟠 Dangereux</b><span>Attaques avancées, équipe recommandée.</span></div><div><b>🔴 Très dangereux</b><span>Intervention gradée obligatoire.</span></div><div><b>⚫ Priorité absolue</b><span>Menace majeure, signalement immédiat.</span></div></div>
+    <section class="section" id="journal">
+      <div class="section-title">
+        <span class="tag">OBSERVATIONS</span>
+        <h2>Journal scientifique</h2>
+      </div>
+      <div id="journalList" class="journal"></div>
     </section>
 
-    <section class="section reveal" id="journal">
-      <div class="section-title"><p>Rapports</p><h2>Journal des observations</h2></div>
-      <div class="reports"><article><b>Rapport n°021</b><span>Narumi Saïonji — 24 Juin</span><p>Le démon Zirossi semble développer une nouvelle onde sonore plus puissante. Éviter les regroupements serrés.</p></article><article><b>Rapport n°022</b><span>Équipe d'analyse — 25 Juin</span><p>Un comportement défensif a été observé après exposition prolongée à la Respiration du Son.</p></article></div>
-    </section>
-
-    <section class="section reveal" id="admin">
-      <div class="section-title"><p>Gestion</p><h2>Panel administrateur</h2></div>
-      <div class="admin-box"><div><h3>Ajouter une fiche</h3><p>Ce formulaire est une maquette. Il permet de préparer les fiches avant de les ajouter dans le fichier JavaScript.</p></div><form><input placeholder="Nom du démon"/><input placeholder="Pouvoir sanguinaire"/><select><option>Faible</option><option>Moyen</option><option>Dangereux</option><option>Très dangereux</option></select><textarea placeholder="Observations"></textarea><button type="button">Prévisualiser</button></form></div>
+    <section class="section" id="admin">
+      <div class="section-title">
+        <span class="tag">GESTION</span>
+        <h2>Panel administrateur</h2>
+        <p>Les fiches ajoutées ici sont sauvegardées sur ton navigateur.</p>
+      </div>
+      <div class="admin-card">
+        <div>
+          <h3>Ajouter une fiche démon</h3>
+          <p>Remplis les champs puis clique sur “Ajouter”.</p>
+        </div>
+        <form id="adminForm">
+          <input name="nom" placeholder="Nom du démon" required>
+          <input name="pouvoir" placeholder="Pouvoir sanguinaire" required>
+          <select name="danger">
+            <option>Faible</option>
+            <option>Moyen</option>
+            <option>Dangereux</option>
+            <option>Très dangereux</option>
+            <option>Priorité absolue</option>
+          </select>
+          <input name="zone" placeholder="Dernière localisation">
+          <input name="rang" placeholder="Rang / Statut">
+          <textarea name="notes" placeholder="Comportement, faiblesse, observations..."></textarea>
+          <button class="btn" type="submit">Ajouter la fiche</button>
+          <button class="btn ghost" type="button" id="resetData">Réinitialiser les données</button>
+        </form>
+      </div>
     </section>
   </main>
 
-  <footer>Projet Info Démon — Archive RP du Corps des Pourfendeurs</footer>
+  <footer>
+    <p>Projet Info Démon — Corps des Pourfendeurs</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
