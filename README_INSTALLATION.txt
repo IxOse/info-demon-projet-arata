@@ -1,25 +1,15 @@
-SITE INFO DÉMON PRO V1
+INSTALLATION SIMPLE
 
-Fichiers à envoyer sur GitHub :
-- index.html
-- style.css
-- script.js
-- assets/
+1. Supprime tout dans ton dépôt sauf README.md si tu veux.
+2. Extrais ce ZIP.
+3. Envoie directement à la racine :
+   - index.html
+   - style.css
+   - script.js
+   - assets
+4. N'envoie PAS le fichier ZIP sur GitHub.
+5. Settings > Pages > main > /(root).
 
-Accès SteamID64 de test :
-- 76561198000000001 : Scientifique dirigeant
-- 76561198000000002 : Scientifique chef
-- 76561198000000003 : Scientifique en test
-
-Permissions :
-- Scientifique en test : lecture
-- Scientifique confirmé : lecture + observations (prévu pour version suivante)
-- Scientifique chef : ajout/modification/suppression des démons
-- Scientifique co-gérant : gestion avancée des fiches
-- Scientifique gérant : gestion des scientifiques
-- Scientifique dirigeant : accès complet + reset
-
-Important :
-Ce système fonctionne sur GitHub Pages avec localStorage.
-Les données sont sauvegardées sur le navigateur de la personne.
-Pour une vraie base partagée entre tous, il faudra plus tard ajouter Firebase/Supabase.
+SteamID de test :
+76561198000000001 = Scientifique dirigeant
+76561198000000002 = Scientifique chef
